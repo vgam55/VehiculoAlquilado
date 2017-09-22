@@ -21,7 +21,8 @@ import javax.persistence.Id;
 @Entity
 @Table(name="vehiculos")
 public class VehiculoPER implements Serializable {
-
+   //Clase que define los campos de la tabla Vehiculos y las relaciones con
+   //la tabla Alquileres.
     @Id
     @Basic(optional=false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

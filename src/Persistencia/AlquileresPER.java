@@ -19,7 +19,8 @@ import javax.persistence.Id;
 @Entity
 @Table(name="alquileres")
 public class AlquileresPER implements Serializable {
-
+   //Clase que define los campos de la tabla Alquileres y las relaciones con
+   //las tablas Clientes y Vehiculos
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

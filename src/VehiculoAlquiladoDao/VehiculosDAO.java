@@ -21,7 +21,9 @@ public class VehiculosDAO implements iVehiculosDAO{
     EntityManager em=null;
     EntityTransaction tx=null;
     
-    
+    /* Instancia un objeto de esta clase inicializando los atributos que vamos
+     * a necesitar en el resto de las acciones 
+     */
     public VehiculosDAO()
     {
         emf=Persistence.createEntityManagerFactory("VehiculoAlquiladoPU");
@@ -29,6 +31,7 @@ public class VehiculosDAO implements iVehiculosDAO{
         tx=em.getTransaction();
     }
     
+    //Crea una sentencia SQL para seleccionar un vehiculo en función a los datos que llegan
     private String crearSQL(VehiculoPER vehiculo1)
     {
         String tmpSQL="SELECT vehiculo1 FROM VehiculoPER vehiculo1 WHERE 1=1";
@@ -48,6 +51,8 @@ public class VehiculosDAO implements iVehiculosDAO{
         }
         return tmpSQL;
     }
+   
+    //Devuelve una lista con los vehiculos que cumplen con las condiciones que hemos impuesto
     @Override
     public List<VehiculoPER> selectCUSTOM(VehiculoPER vehiculo) {
         List<VehiculoPER> lista=new ArrayList();
@@ -56,7 +61,8 @@ public class VehiculosDAO implements iVehiculosDAO{
         lista=consulta.getResultList();
         return lista;
     }
-
+    
+    //Devuelve un vehiculo cuya id coincide con la que se le pasa
     @Override
     public VehiculoPER selectID(Object idVehiculo) {
         VehiculoPER vehiculo=null;        
@@ -67,6 +73,7 @@ public class VehiculosDAO implements iVehiculosDAO{
         return vehiculo;        
     }
 
+    //Devuelve la lista de todos los vehiculos guardados en la Base de Datos.
     @Override
     public List<VehiculoPER> selectAll() {
         String SELECTALL="SELECT vehiculo FROM VehiculoPER vehiculo";
@@ -77,12 +84,15 @@ public class VehiculosDAO implements iVehiculosDAO{
         return listaVehi;
     }
 
+    //Guarda el registro que se le pasa
     @Override
     public void insert(VehiculoPER vehiculo) {
         tx.begin();
             em.persist(vehiculo);
         tx.commit();
     }
+   
+    //Borra el registro que coincide con la id que se le pasa
     @Override
     public void delete(Object idVehiculo) {
        VehiculoPER vehiculo1=null;
@@ -96,6 +106,7 @@ public class VehiculosDAO implements iVehiculosDAO{
        tx.commit();
     }
 
+    //Actualiza el registro que coincide con el id que se le pasa
     @Override
     public void update(VehiculoPER vehiculo) {
        // String UPDATESQL="UPDATE vehiculos SET marca=?, modelo=? WHERE idVehiculo=?";

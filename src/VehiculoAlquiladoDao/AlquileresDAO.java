@@ -20,6 +20,10 @@ public class AlquileresDAO implements iAlquileresDAO{
     EntityManager em=null;
     EntityTransaction tx=null;
     NullRegisterException devolucion=new NullRegisterException();
+    
+    /* Busca los registros que cumplan con una serie de condicione en función
+     * de los datos que recibe y devuelve una lista con el resultado
+     */
     private String createSQL(AlquileresPER alquiler)
     {
         String consulta="SELECT alquiler1 FROM AlquileresPER alquiler1 WHERE 1=1";
@@ -50,6 +54,7 @@ public class AlquileresDAO implements iAlquileresDAO{
         return consulta;
     }
     
+    //Crea una sentencia SQL que luego utilizaremos en SelectCustom.
     public AlquileresDAO()
     {
         emf=Persistence.createEntityManagerFactory("VehiculoAlquiladoPU");
@@ -57,6 +62,9 @@ public class AlquileresDAO implements iAlquileresDAO{
         tx=em.getTransaction();
     }
     
+    /* Busca los registros que cumplan con una serie de condicione en función
+     * de los datos que recibe y devuelve una lista con el resultado
+     */
     @Override
     public List<AlquileresPER> selectCUSTOM(AlquileresPER alquiler){
         List<AlquileresPER> lista=new ArrayList();
@@ -66,7 +74,8 @@ public class AlquileresDAO implements iAlquileresDAO{
         //devolucion.devolucionNula(lista);
         return lista;
     }
-
+   
+   // Devuelve un registro cuyo Id sea igual al que se le pasa (si existe 
     @Override
     public AlquileresPER selectID(Object idAlquiler) {
        AlquileresPER alquiler1=null;
@@ -77,6 +86,7 @@ public class AlquileresDAO implements iAlquileresDAO{
         return alquiler1;
     }
 
+    //Devuelve todos los registros que componen la tabla Alquileres
     @Override
     public List<AlquileresPER> selectAll() {
         String SELECTALL="SELECT alquiler FROM AlquileresPER alquiler";
@@ -87,6 +97,7 @@ public class AlquileresDAO implements iAlquileresDAO{
         return listaAlqui;
     }
 
+    //Inserta un registro con los datos que se le pase
     @Override
     public void insert(AlquileresPER alquiler) {
        tx.begin();
@@ -94,6 +105,7 @@ public class AlquileresDAO implements iAlquileresDAO{
        tx.commit();
     }
 
+    //Borra un registro cuyo id sea igual al id que se le pasa
     @Override
     public void delete(Object idAlquiler) {
         AlquileresPER alquiler1=null;
@@ -107,10 +119,14 @@ public class AlquileresDAO implements iAlquileresDAO{
         tx.commit();
     }
 
+    // Actualiza un registro cuya id sea igual a la que se le pasa, con 
+    // los datos que se les pasa
     @Override
     public void update(AlquileresPER alquiler) {
         AlquileresPER alquiler1=null;
         tx.begin();
+          if (alquiler!=null)
+          {
             alquiler1=em.find(AlquileresPER.class,alquiler.getIdAlquiler());
             
             if(alquiler.getIdCliente()>0)
@@ -132,6 +148,7 @@ public class AlquileresDAO implements iAlquileresDAO{
             {
                 alquiler1.setMatricula(alquiler.getMatricula());
             }
+          }
             
         tx.commit();
         

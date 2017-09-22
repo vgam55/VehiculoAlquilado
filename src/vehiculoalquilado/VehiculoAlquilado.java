@@ -295,6 +295,10 @@ public class VehiculoAlquilado extends JFrame{
        jtfEdiModeloVehi.setText("");
     }
     
+    /*
+     * Coge los datos de los campos de los campos que hay en la sección de "filtros"
+     * de la pestaña Vehiculos para luego realizar busquedas con ellos.
+    */
     private void cogerDatosFilVehi() throws IdIncorrectoExcepcion
     {
      
@@ -315,6 +319,11 @@ public class VehiculoAlquilado extends JFrame{
       }
     }
     
+     /*
+      * Coge los datos de los campos de los campos que hay en la sección de "edición"
+      * de la pestaña Vehiculos para luego realizar inserciones, borrados o 
+      * actualizaciones con ellos
+      */
     private void cogerDatosEdiVehi() throws IdIncorrectoExcepcion
     {
          if(!jtfEdiIdVehi.getText().equals(""))
@@ -333,6 +342,7 @@ public class VehiculoAlquilado extends JFrame{
       }
     }
     
+    //Limpia los campos de la zona de filtros en la pestaña Alquileres
     private void limpiarFilAlqui()
     {
         jtfFilIdCliAlqui.setText("");
@@ -343,6 +353,7 @@ public class VehiculoAlquilado extends JFrame{
         llenarTabAlqui();
     }
     
+    //Limpia los campos de la zona de edición en la pestaña Alquileres
     private void limpiarEdiAlqui()
     {
         jtfEdiIdVehiAlqui.setText("");
@@ -350,6 +361,10 @@ public class VehiculoAlquilado extends JFrame{
         jtfEdiKilometrosAlqui.setText("");
     }
     
+    /*
+     * Coge los datos de los campos de los campos que hay en la sección de "filtros"
+     * de la pestaña Alquileres para luego realizar busquedas con ellos.
+    */
     private void cogerDatosFilAlqui() throws IdIncorrectoExcepcion
     {
         int id;
@@ -382,6 +397,11 @@ public class VehiculoAlquilado extends JFrame{
        
     }
     
+     /*
+      * Coge los datos de los campos de los campos que hay en la sección de "edición"
+      * de la pestaña Alquileres para luego realizar inserciones, borrados o 
+      * actualizaciones con ellos
+      */
     private void cogerDatosEdiAlqui() throws IdIncorrectoExcepcion
     {
         int id;
@@ -434,6 +454,7 @@ public class VehiculoAlquilado extends JFrame{
         jspVisualClien.setViewportView(jtVisualClien);
     }
     
+    // Llenamos la tabla vehiculos
     private void llenarTabVehi()
     {
         Object []fila=new Object[3];
@@ -454,6 +475,7 @@ public class VehiculoAlquilado extends JFrame{
         jpVehVisual.add(jspVisualVehi);
     }
     
+    // Llenamos la tabla alquileres
     private void llenarTabAlqui()
     {
         Object []fila1= new Object[5];
@@ -476,9 +498,11 @@ public class VehiculoAlquilado extends JFrame{
        jpAlquiVisual.add(jspVisualAlqui);
     }
    
-   //Inicializa los listeners      
+   //Inicializa los listeners que van asociados a los distintos elementos que
+   //pueden realizar acciones en las distintas pestañas (botones y jtextfields sobre todo)
     public void initListeners()
     {
+        //Termina la ejecución del programa cuando damos a la X en la barra del titulo
         wlSalir=new WindowAdapter()
         {
             public void windowClosing(WindowEvent evt)
@@ -487,6 +511,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Termina la ejecución del programa cuando presionamos la opción Salir
+        //en el menu Archivo
         alSalir=new ActionListener()
         {
             @Override
@@ -495,6 +521,8 @@ public class VehiculoAlquilado extends JFrame{
             }           
         };
         
+        //Muestra un panel con consejos cuando pulsas en la opción ayuda en el 
+        //menú ayuda
         alAyuda=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -503,6 +531,7 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Filtra los clientes por el número de cliente según se va escribiendo
         dlIdCli=new DocumentListener()
         {
             @Override
@@ -564,6 +593,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
        
+        //Filtra los clientes por la ciudad del cliente según se va escribiendo
         dlCiudCli=new DocumentListener()
         {
             @Override
@@ -624,6 +654,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
         
+        //Filtra los clientes por el nombre del cliente según se va escribiendo
         dlNomCli=new DocumentListener()
         {
             @Override
@@ -684,6 +715,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
         
+        //Filtra los clientes por el apellido del cliente según se va escribiendo
         dlApellCli=new DocumentListener()
         {
             @Override
@@ -744,6 +776,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
        
+        //Limpia los campos de la zona "Filtros" de clientes 
         alBorrarFilCli=new ActionListener()
         {
           @Override
@@ -754,6 +787,10 @@ public class VehiculoAlquilado extends JFrame{
           }
         };
         
+        /*
+         * Pasa los datos del registro seleccionado a los campos de "Edición"
+         * de la pestaña de clientes.
+         */
         mlFilaCli=new MouseAdapter()
         {
             public void mouseClicked(MouseEvent evt)
@@ -766,6 +803,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Coge los datos de edición, lo añade a la BBDD y muestra todo su conte-
+        //nido nuevamente
        alAniadirCli=new ActionListener()
        {
            public void actionPerformed(ActionEvent e)
@@ -775,10 +814,10 @@ public class VehiculoAlquilado extends JFrame{
                 cliente=new ClientesPER();
                 cogerDatosFilClientes();
                 cogerDatosEdiClientes();
-               clienteDao.insert(cliente); 
-               resultado=clienteDao.selectAll();
-               llenarTabClient();
-               lblEdiResul.setText("Registro guardado con exito");
+                clienteDao.insert(cliente); 
+                resultado=clienteDao.selectAll();
+                llenarTabClient();
+                lblEdiResul.setText("Registro guardado con exito");
                 
                 }
                 catch(IdIncorrectoExcepcion ex)
@@ -793,7 +832,9 @@ public class VehiculoAlquilado extends JFrame{
                
            }
        };
-      
+       
+       //Coge los datos de edición, actualizar un registro y muestra el contendio
+       //de la tabla clientes 
        alActualizarCli=new ActionListener()
        {
            public void actionPerformed(ActionEvent e)
@@ -817,6 +858,7 @@ public class VehiculoAlquilado extends JFrame{
             }
        };
        
+       //Lo mismo que alActualizar pero borrando un cliente
        alBorrarCli=new ActionListener()
        {
            public void actionPerformed(ActionEvent e)
@@ -853,6 +895,7 @@ public class VehiculoAlquilado extends JFrame{
            }
        };
         
+       //Limpia la zona de Edición de la pestaña clientes
         alLimpiarEdiCli=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -861,6 +904,7 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Filtra los vehiculos por el identificador del vehiculo
        dlIdVehi=new DocumentListener()
         {
             @Override
@@ -934,6 +978,7 @@ public class VehiculoAlquilado extends JFrame{
         
         };
        
+       //Filtra los vehiculos por la marca
         dlMarcaVehi=new DocumentListener()
         {
             @Override
@@ -1006,6 +1051,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
        
+        //Filtra los vehiculos por su modelo.
         dlModeloVehi=new DocumentListener()
         {
             @Override
@@ -1078,6 +1124,9 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
         
+        /* Coge los datos de un nuevo vehiculo y los añade a la tabla Vehiculos
+         * de la BBDD
+        */
         alAniadirVehi=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1107,6 +1156,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Actualiza los datos de un vehiculo con los que aparecen en la zona de
+        //edición de la pestaña Vehiculos.
         alActualizarVehi= new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1136,6 +1187,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
        
+        //Borra un vehiculo a partir de la Id que encuentre en la zona de edición
+        //de la pestaña Vehiculos
         alBorrarVehi=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1171,6 +1224,7 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Limpia la zona de "Filtros" de la pestaña vehiculos
         alLimpiarFilVehi=new ActionListener()
         {
           public void actionPerformed(ActionEvent e)
@@ -1180,6 +1234,7 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Limpia la zona de "Edición" de la pestaña vehiculos
         alLimpiarEdiVehi=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1189,6 +1244,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Pasa los campos de una fila de la tabla vehiculos a los campos de la
+        //zona "Edición" de la pestaña Vehiculos
         mlFilaVehi= new MouseAdapter()
         {
             public void mouseClicked(MouseEvent evt)
@@ -1199,7 +1256,8 @@ public class VehiculoAlquilado extends JFrame{
                 jtfEdiModeloVehi.setText(String.valueOf(jtVisualVehi.getValueAt(fila,2)));     
             }
         };
-      
+       
+        //Filtra los alquileres por el identificador del cliente
         dlIdCliAlqui=new DocumentListener()
         {
             @Override
@@ -1260,6 +1318,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
         
+        //Filtra los alquileres por el identificador del vehiculo
         dlIdVehiAlqui=new DocumentListener()        
         {
             @Override
@@ -1320,6 +1379,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
       
+        //Filtra los alqileres por la matricula del coche
         dlMatriculaAlqui=new DocumentListener()
         {
             @Override
@@ -1380,6 +1440,7 @@ public class VehiculoAlquilado extends JFrame{
             }        
         };
       
+        //Filtra los alquileres por los kilometros que ha recorrido el coche
         dlKilometrosAlqui=new DocumentListener()
         {
             @Override
@@ -1440,6 +1501,8 @@ public class VehiculoAlquilado extends JFrame{
             }       
         };
         
+        //Pasa los campos de una fila de la tabla vehiculos a los campos de la
+        //zona "Edición" de la pestaña Vehiculos
         mlFilaAlqui=new MouseAdapter()
         {
             public void mouseClicked(MouseEvent evt)
@@ -1453,6 +1516,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Añade un nuevo registro a la tabla alquiler a partir de  los datos de
+        //la zona de edición en la pestaña Alquileres
         alAniadirAlqui=new ActionListener()
         {
             @Override
@@ -1478,6 +1543,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
       
+        //Actualiza un nuevo registro a la tabla alquiler a partir de  los datos de
+        //la zona de edición en la pestaña Alquileres
         alActualizarAlqui=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1502,6 +1569,8 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
        
+        //Borra un nuevo registro a la tabla alquiler a partir de  los datos de
+        //la zona de edición en la pestaña Alquileres
         alBorrarAlqui=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1526,6 +1595,7 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
         
+        //Limpia los campos de la zona "Edición" de la pestaña Alquileres.
         alLimpiarEdiAlqui=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1534,6 +1604,7 @@ public class VehiculoAlquilado extends JFrame{
             }
         };
        
+        //Limpia los campos de la zona "Filtros" de la pestaña Alquileres.
         alLimpiarFilAlqui=new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -1570,6 +1641,7 @@ public class VehiculoAlquilado extends JFrame{
         constrains.weightx=0.0;
     }
    
+    //Crea el diseño de la zona de Filtros en la pestaña Clientes
     private void initFitroClientes()
     {
         JPanel jpBotonesFiltroClientes=new JPanel();
@@ -1657,6 +1729,7 @@ public class VehiculoAlquilado extends JFrame{
         constrains.weightx=0.0;
     }
     
+    //Crea el diseño de la zona de Edición en la pestaña Clientes
     private void initEdiClientes()
     {
         JPanel jpBotonesEdiClientes=new JPanel();
@@ -1774,6 +1847,7 @@ public class VehiculoAlquilado extends JFrame{
         
     }
     
+    //Crea el diseño de la pestaña clientes   
     private void initClientes()
     {
         jpcliVisual=new JPanel();
@@ -1828,6 +1902,7 @@ public class VehiculoAlquilado extends JFrame{
         initEdiClientes();
     }
   
+     //Crea el diseño de la zona de Filtros en la pestaña Vehiculos
     private void initFiltroVehi()
     {
         JPanel jpBotonesFiltroVehi=new JPanel();
@@ -1899,6 +1974,7 @@ public class VehiculoAlquilado extends JFrame{
         constrains3.weightx=0.0;    
     }
     
+     //Crea el diseño de la zona de Edición en la pestaña Vehiculos
     private void initEdiVehi()
     {
         GridBagConstraints constrains4=new GridBagConstraints();
@@ -2000,6 +2076,7 @@ public class VehiculoAlquilado extends JFrame{
         jpVehEdicion.add(lblResulEdiVehi,constrains4);
     }
     
+    //Crea el diseño de la pestaña Vehiculos
     private void initVehiculo()
     {
         vehiculoDao=new VehiculosDAO();
@@ -2041,6 +2118,7 @@ public class VehiculoAlquilado extends JFrame{
         initEdiVehi();
     }
     
+    //Crea el diseño de la zona Filtros de la pestaña Alquileres.
     private void initFiltroAlqui()
     {
         GridBagConstraints constrains6=new GridBagConstraints();
@@ -2131,6 +2209,7 @@ public class VehiculoAlquilado extends JFrame{
         constrains.weightx=0.0;
     }
     
+    //Crea el diseño de la zona Alquileres de la pestaña Alquileres
     private void initEdiAlqui()
     {
         GridBagConstraints constrains7=new GridBagConstraints();
@@ -2244,6 +2323,7 @@ public class VehiculoAlquilado extends JFrame{
         jpAlquiEdicion.add(lblResulEdiAlqui,constrains7);
     }
     
+    //Crea la pestaña Alquileres
     private void initAlquileres()
     {
         alquilerDao=new AlquileresDAO();
@@ -2302,6 +2382,8 @@ public class VehiculoAlquilado extends JFrame{
         initEdiAlqui();       
     }
     
+    //Coge los paneles a los que se han añadido los distintos elementos y crea 
+    //el diseño de la zona de paneles.
     private void initPestanias()
     {      
         jtpPestanias=new JTabbedPane();
@@ -2324,6 +2406,7 @@ public class VehiculoAlquilado extends JFrame{
         constrains.weighty=0.0;
     }
     
+    //Crea el diseño general de la aplicación
     public void initComponents()
     {
         setTitle("Alquiler de vehiculos");
